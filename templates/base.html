@@ -1,0 +1,21 @@
+<!--  \templates\base.html  -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="static/css/style.css">
+  </head>
+  <header>
+    <nav class="navbar">
+      <form class="form-inline my-2 my-lg-0" action="{{ url_for('results') }}" method="GET">
+        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </nav>
+  </header>
+  <body>
+    {% block content %}{% endblock %}
+  </body>
+  <footer>
+  </footer>
+</html>
+<!--  \templates\base.html  -->
