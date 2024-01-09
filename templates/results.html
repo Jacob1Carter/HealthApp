@@ -5,6 +5,16 @@
 
 <h2>This the results page</h2>
 
+{% for type in data %}
+    <h3>{{ type }}</h3>
+    {% for item in data[type] %}
+        <a href="/details/{{ item['food_name'] }}">
+            <p>{{ item['food_name'] }}</p>
+            <img style="max-width: 300px; max-height: 300px;" src="{{ item['photo']['thumb'] }}">
+        </a>
+    {% endfor %}
+{% endfor %}
+
 {% endblock %}
 
 <!--  \templates\landing.html  -->
