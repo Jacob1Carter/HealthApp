@@ -39,6 +39,7 @@ def details(item):
     response = requests.post(url, headers=headers, json=query_data)
     data = response.json()
     food_item = data["foods"][0]
+    print(food_item)
 
     return render_template("details.html", item=food_item)
 
