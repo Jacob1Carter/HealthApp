@@ -3,12 +3,31 @@
 <html>
   <head>
     <link rel="stylesheet" href="static/css/style.css">
+    <title>Nutrition Info</title>
+
+    <script>
+      function quickSearch() {
+        var searchQuery = document.getElementById("searchBar").value;
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("result").innerHTML = this.responseText;
+          }
+        };
+        xhttp.open("GET", "https://trackapi.nutritionix.com/v2/search/instant/?query=" + searchQuery, true);
+        xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhttp.setRequestHeader("x-app-id", "e8aee087");
+        xhttp.setRequestHeader("x-app-key", "ee3fc88b259cf08a43ac94f8dd1afb62");
+        xhttp.send();
+      }
+    </script>
   </head>
   <header>
     <nav class="navbar">
       <form class="form-inline my-2 my-lg-0" action="{{ url_for('results') }}" method="GET">
-        <input class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search">
+        <input id="searchBar" class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search" onkeyup="quickSearch()">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <div id="result"></div>
       </form>
     </nav>
   </header>
