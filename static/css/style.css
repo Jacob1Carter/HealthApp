@@ -1,7 +1,44 @@
 /*  \static\css\style.css   */
 
 .common {
-    width:
+}
+
+.navbar {
+}
+
+.col-sm-1 {
+    width: 50% !important;
+}
+
+.col-sm-2 {
+    width: 50% !important;
+}
+
+.search-form {
+    width: 700px;
+}
+
+.search-container {
+    background-color: rgb(80, 80, 80);
+}
+
+.dropdown-search {
+    display: flex;
+    flex-direction: row;
+    max-height: 300px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.dropdown-icon {
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.dropdown-food {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
 }
 
 /*  \static\css\style.css   */
