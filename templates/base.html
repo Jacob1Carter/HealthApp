@@ -1,70 +1,84 @@
 <!--  \templates\base.html  -->
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <title>Nutrition Info</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Nutrition Intro</title>
+        <link rel="stylesheet" href="static/css/style.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
-    <script>
-      function quickSearch() {
-        var searchQuery = document.getElementById("searchBar").value;
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-            var responseData = JSON.parse(this.responseText);
-            var brandedItems = responseData.branded;
-            var commonItems = responseData.common;
+        <script>
+            function quickSearch() {
+                var searchQuery = document.getElementById("searchBar").value;
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var responseData = JSON.parse(this.responseText);
+                        var brandedItems = responseData.branded;
+                        var commonItems = responseData.common;
+                        var dropdownSearch = document.getElementById("dropdown-search")
 
-            // Clear previous results
-            document.getElementById("commonResults").innerHTML = "<h1>Common:<h1>";
-            document.getElementById("brandedResults").innerHTML = "<h1>Branded:<h1>";
+                        // Clear previous results
+                        document.getElementById("commonResults").innerHTML = "<h3>Common:<h3><div id='commonOutput' class='common-results'></div>";
+                        document.getElementById("brandedResults").innerHTML = "<h3>Branded:<h3><div id='brandedOutput' class='branded-results'></div>";
+                        dropdownSearch.classList.add("hidden")
+                        console.log("here")
 
-            // Display 'food_name' for each item in 'common' array
-            commonItems.forEach(function(item) {
-              var foodName = item.food_name;
-              var foodNameDiv = document.createElement("div");
-              foodNameDiv.classList.add("dropdown-food")
-              foodNameDiv.innerHTML = "<img href='/details/foodName' class='dropdown-icon' src='" + item.photo.thumb + "'></img><a href='/details/foodName'>" + foodName + "</a>";
-              document.getElementById("commonResults").appendChild(foodNameDiv);
-            });
+                        // Display 'food_name' for each item in 'common' array
+                        commonItems.forEach(function(item) {
+                            var foodName = item.food_name;
+                            var foodNameDiv = document.createElement("div");
+                            foodNameDiv.classList.add("dropdown-food")
+                            foodNameDiv.innerHTML = "<div class='dropdown-icon-container'><img href='/details/foodName' class='dropdown-icon' src='" + item.photo.thumb + "'></div></img><a href='/details/foodName'>" + foodName + "</a>";
+                            document.getElementById("commonOutput").appendChild(foodNameDiv);
+                            dropdownSearch.classList.remove("hidden")
+                        });
 
-            // Display 'food_name' for each item in 'branded' array
-            brandedItems.forEach(function(item) {
-              var foodName = item.food_name;
-              var foodNameDiv = document.createElement("div");
-              foodNameDiv.classList.add("dropdown-food")
-              foodNameDiv.innerHTML = "<img href='/details/foodName' class='dropdown-icon' src='" + item.photo.thumb + "'></img><a href='/details/foodName'>" + foodName + "</a>";
-              document.getElementById("brandedResults").appendChild(foodNameDiv);
-            });
-          }
-        };
-        xhttp.open("GET", "https://trackapi.nutritionix.com/v2/search/instant/?query=" + searchQuery, true);
-        xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhttp.setRequestHeader("x-app-id", "e8aee087");
-        xhttp.setRequestHeader("x-app-key", "ee3fc88b259cf08a43ac94f8dd1afb62");
-        xhttp.send();
-      }
-    </script>
-  </head>
-  <header>
-    <nav class="navbar">
-      <form class="search-form form-inline my-2 my-lg-0" action="{{ url_for('results') }}" method="GET">
-        <div class="search-container">
-          <input id="searchBar" class="form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search" onkeyup="quickSearch()">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </div>
-        <row class="dropdown-search">
-          <div class="col-sm-1" id="commonResults"></div>
-          <div class="col-sm-2" id="brandedResults"></div>
-        </row>
-      </form>
-    </nav>
-  </header>
-  <body>
-    {% block content %}{% endblock %}
-  </body>
-  <footer>
-  </footer>
+                        // Display 'food_name' for each item in 'branded' array
+                        brandedItems.forEach(function(item) {
+                            var foodName = item.food_name;
+                            var foodNameDiv = document.createElement("div");
+                            foodNameDiv.classList.add("dropdown-food")
+                            foodNameDiv.innerHTML = "<div class='dropdown-icon-container'><img href='/details/foodName' class='dropdown-icon' src='" + item.photo.thumb + "'></div></img><a href='/details/foodName'>" + foodName + "</a>";
+                            document.getElementById("brandedOutput").appendChild(foodNameDiv);
+                            dropdownSearch.classList.remove("hidden")
+                        });
+                    }
+                };
+                xhttp.open("GET", "https://trackapi.nutritionix.com/v2/search/instant/?query=" + searchQuery, true);
+                xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                xhttp.setRequestHeader("x-app-id", "e8aee087");
+                xhttp.setRequestHeader("x-app-key", "ee3fc88b259cf08a43ac94f8dd1afb62");
+                xhttp.send();
+            }
+        </script>
+    </head>
+    <header>
+        <nav class="navbar">
+            <div class="search-container">
+                <form class="search-form form-inline my-2 my-lg-0" action="" method="GET">
+                    <input id="searchBar" class="search-bar form-control mr-sm-2" type="search" name="query" placeholder="Search" aria-label="Search" onkeyup="quickSearch()">
+                    <button class="search-button btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+            <row id="dropdown-search" class="dropdown-search hidden">
+                <div class="col-sm-1" id="commonResults">
+                    <div id="commonOutput" class="common-results"></div>
+                </div>
+                <div class="col-sm-2" id="brandedResults">
+                    <div id="brandedOutput" class="branded-results"></div>
+                </div>
+            </row>
+        </nav>
+    </header>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+    <footer>
+    </footer>
 </html>
 <!--  \templates\base.html  -->
